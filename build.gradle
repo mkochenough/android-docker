@@ -1,0 +1,37 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:2.6.7'
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+docker {
+    if (System.env.DOCKER_HOST) {
+        url = "$System.env.DOCKER_HOST".replace("tcp","http")
+    }
+    else {
+        url = 'unix:///var/run/docker.sock'
+    }
+}
+
+task buildImage(type: DockerBuildImage) {
+    inputDir = file('.')
+    tag = 'mkoch/android'
+    noCache = true
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
