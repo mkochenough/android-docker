@@ -1,3 +1,5 @@
+# Based on https://hub.docker.com/r/gfx2015/android/
+
 FROM mkoch/java:latest
 MAINTAINER Michael Koch <michael.koch@enough.de>
 
